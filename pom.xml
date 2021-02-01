@@ -10,11 +10,11 @@
 	</parent>
 	<groupId>ru.otus.microservice-architecture</groupId>
 	<artifactId>homework-01</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>homework-01</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 		<lombok.version>1.18.12</lombok.version>
 	</properties>
 

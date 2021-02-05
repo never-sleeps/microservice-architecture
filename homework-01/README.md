@@ -29,10 +29,14 @@ RESPONSE: {"status": "OK"}
     
     neversleeps/otus-arch-homework-01
 
-пример сurl, по которому можно будет получить ответ от сервиса: 
+сurl, по которому можно будет получить ответ от сервиса: 
 
+    curl arch.homework/otusapp/iakonyakina/health
+    
+Пример сurl если не прописан host в /etc/hosts:
+    
     curl -H "Host: arch.homework" http://192.168.64.2/otusapp/iakonyakina/health
-
+    
 где значение адреса сервиса можно получить по имени сервиса и namespace, в котором он находится: 
     
     minikube service hello-service --url -n myapp

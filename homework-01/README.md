@@ -33,7 +33,7 @@ RESPONSE: {"status": "OK"}
 
     curl arch.homework/otusapp/iakonyakina/health
     
-Пример сurl если не прописан host в /etc/hosts:
+Пример сurl, если не прописан host в /etc/hosts:
     
     curl -H "Host: arch.homework" http://192.168.64.2/otusapp/iakonyakina/health
     

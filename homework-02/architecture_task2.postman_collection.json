@@ -32,7 +32,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://arch.homework/otusapp/konyakina/user/1",
+					"raw": "http://arch.homework/otusapp/konyakina/user/{{id}}",
 					"protocol": "http",
 					"host": [
 						"arch",
@@ -42,7 +42,7 @@
 						"otusapp",
 						"konyakina",
 						"user",
-						"1"
+						"{{id}}"
 					]
 				}
 			},
@@ -50,6 +50,18 @@
 		},
 		{
 			"name": "create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"id\", responseJSON[\"id\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -85,7 +97,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n    \"id\": \"1\",  \r\n    \"name\": \"Petrov Peter\",\r\n    \"mail\": \"petrov@gmail.ru\"\r\n} ",
+					"raw": "{  \r\n    \"id\": {{id}},  \r\n    \"name\": \"Petrov Peter\",\r\n    \"mail\": \"petrov@gmail.ru\"\r\n} ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -114,7 +126,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://arch.homework/otusapp/konyakina/user/1",
+					"raw": "http://arch.homework/otusapp/konyakina/user/{{id}}",
 					"protocol": "http",
 					"host": [
 						"arch",
@@ -124,11 +136,37 @@
 						"otusapp",
 						"konyakina",
 						"user",
-						"1"
+						"{{id}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
 		}
 	]
 }

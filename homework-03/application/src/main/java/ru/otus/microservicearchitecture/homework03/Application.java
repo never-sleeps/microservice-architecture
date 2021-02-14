@@ -9,19 +9,7 @@ import java.util.Properties;
 
 @SpringBootApplication
 public class Application {
-
-	public static void main(String[] args) throws IOException {
-		SpringApplication application = new SpringApplication(Application.class);
-
-		Properties properties = new Properties();
-		properties.load(new FileInputStream("./config/application.properties"));
-		properties.put("spring.datasource.username", System.getenv("dbusername"));
-		properties.put("spring.datasource.password", System.getenv("dbpassword"));
-		application.setDefaultProperties(properties);
-
-		System.out.println("Properties loaded: " + properties);
-
-		application.run(args);
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
 	}
-
 }

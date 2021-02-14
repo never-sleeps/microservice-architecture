@@ -5,50 +5,48 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.microservicearchitecture.homework03.model.User;
-import ru.otus.microservicearchitecture.homework03.service.UserService;
+import ru.otus.microservicearchitecture.homework03.repositories.UserRepository;
 
 import java.util.List;
 
-@Timed(
-        value = "users-service.timed.http.request",
-        percentiles = {0.5, 0.95, 0.99, 1},
-        histogram = true
-)
-@AllArgsConstructor
+@Timed(value = "user.requests")
 @RestController
+@RequestMapping("/user")
+@AllArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    @GetMapping("/user")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    private List<User> getAll() {
-        if (Math.random() * 10 < 2){
-            throw new IndexOutOfBoundsException("Just for fun. 20% of 5xx");
+    public List<User> getAllUsers(){
+        if (Math.random() * 100 < 5){
+            throw new IndexOutOfBoundsException("Just for fun. Need 5xx");
         }
-        return userService.findAll();
+        return userRepository.findAll();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    private Object getUser(@PathVariable("id") long id) {
-        return userService.findAuthorById(id);
+    public User getUser(@PathVariable("userId") Long userId){
+        return userRepository.findById(userId).orElse(null);
     }
 
-    @PostMapping("/user")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public User createUser(@RequestBody User user){
+        return userRepository.save(user);
     }
 
-    @PutMapping("/user")
+    @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    private User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public User updateUser(@PathVariable("userId") Long userId, @RequestBody User user){
+        user.setId(userId);
+        return userRepository.save(user);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    private void deleteUser(@PathVariable("id") long id) {
-        userService.deleteUser(id);
+    public void deleteUser(@PathVariable("userId") Long userId){
+        userRepository.deleteById(userId);
     }
 }

@@ -1,6 +1,18 @@
 server:
   port: 8000
 
+spring:
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
 
 management:
   endpoint:
@@ -18,5 +30,5 @@ management:
         enabled: true
     distribution:
       percentiles:
-        user.requests: 0.5, 0.95, 0.99, 1.0
-      percentiles-histogram[users-service.timed.http.request]: true
+        user.requests: 0.5, 0.95, 0.99
+      percentiles-histogram[user.requests]: true

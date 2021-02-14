@@ -1,0 +1,22 @@
+server:
+  port: 8000
+
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles:
+        user.requests: 0.5, 0.95, 0.99, 1.0
+      percentiles-histogram[users-service.timed.http.request]: true

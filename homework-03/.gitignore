@@ -1,6 +1,6 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!application/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -33,4 +33,4 @@ build/
 .vscode/
 
 /.idea/
-/.mvn/
+/application/.mvn/

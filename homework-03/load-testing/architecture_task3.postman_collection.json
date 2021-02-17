@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "cb206e14-c03e-4f86-a8a1-048a8d866a91",
+		"name": "architecture_task3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Method Not Allowed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://my.monitoring/app/user/fail",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user",
+						"fail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://my.monitoring/app/user",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"id\", responseJSON[\"id\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ivanov Ivan\",\r\n    \"mail\": \"ivan@mail.ru\"\r\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://my.monitoring/app/user",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://my.monitoring/app/user/{{id}}",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"name\": \"Petrov Peter\",\r\n    \"mail\": \"petrov@gmail.ru\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://my.monitoring/app/user/{{id}}",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://my.monitoring/app/user/{{id}}",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete for fail",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://my.monitoring/app/user/0",
+					"protocol": "http",
+					"host": [
+						"my",
+						"monitoring"
+					],
+					"path": [
+						"app",
+						"user",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		}
+	]
+}

@@ -1,0 +1,18 @@
+controller:
+  kind: DaemonSet
+
+  reportNodeInternalIp: true
+
+  hostPort:
+    enabled: true
+    ports:
+      http: 80
+      https: 443
+
+  service:
+    type: NodePort
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true

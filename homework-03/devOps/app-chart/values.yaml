@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: neversleeps/otus-arch-homework-03
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 9000
+
+ingress:
+  enabled: true
+  hosts:
+    - host: my.monitoring
+      paths: ["/app"]
+
+metrics:
+    serviceMonitor:
+      enabled: true
+
+postgresql:
+  enabled: true
+  postgresqlUsername: postgresuser
+  postgresqlPassword: postgrespass
+  postgresqlDatabase: postgresdb
+  service:
+    port: "5432"
+  fullnameOverride: postgres

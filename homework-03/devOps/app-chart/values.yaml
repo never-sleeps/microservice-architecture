@@ -11,12 +11,9 @@ service:
 
 ingress:
   enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
-    - host: arch.homework
-      paths:
-        path: /otusapp/3($|/)(.*)
+    - host: my.monitoring
+      paths: ["/app"]
 
 metrics:
     serviceMonitor:

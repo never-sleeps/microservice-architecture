@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stress-test123
+spec:
+  template:
+    metadata:
+      name: stress-test123
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: stress-test
+          image: curlimages/curl:7.71.1
+          args:
+            - /bin/sh
+            - -c
+            - |
+              while true;
+              do
+                curl http://my.monitoring/app/user;
+                curl --header "Content-Type: application/json" --request POST --data '{"name": "stress-test","mail": "stress@test.com"}' http://my.monitoring/app/user;
+                curl --header "Content-Type: application/json" --request PUT --data '{"name": "test","mail": "test@test.com"}' http://my.monitoring/app/user/999;
+                curl --request DELETE http://my.monitoring/app/user/999;
+                sleep 1;
+              done;

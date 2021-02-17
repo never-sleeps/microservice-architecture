@@ -42,6 +42,6 @@ https://www.katacoda.com/schetinnikov/scenarios/prometheus-client
 
 Grafana Dashboard:
 
-![](screenshots/1.png "")​
+![alt text](screenshots/1.png "")​
 
-![](screenshots/2.png "")​
+![alt text](screenshots/2.png "")​

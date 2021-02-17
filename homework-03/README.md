@@ -37,9 +37,11 @@ https://www.katacoda.com/schetinnikov/scenarios/prometheus-client
 
 ------------------------------------------------------------------
 #### Примечания по решению:
-
-Образ в dockerhub: 
-    
-    neversleeps/otus-arch-homework-03
     
 Для нагрузки использовался Postman Collection Runner (homework-03/load-testing/architecture_task3.postman_collection.json), delay=400ms
+
+Grafana Dashboard:
+
+![](screenshots/1.png "")​
+
+![](screenshots/2.png "")​

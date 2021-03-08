@@ -1,6 +1,7 @@
 package ru.microservicearchitecture.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.microservicearchitecture.dto.UserDto;
 import ru.microservicearchitecture.model.User;
 import ru.microservicearchitecture.service.UserService;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -24,6 +26,7 @@ public class UserController {
     public ResponseDto getUserProfile(
             @RequestHeader("x-user-id") String userId
     ){
+        log.info("Получение данных профиля: 'x-user-id'=" + userId);
         if (userId != null) {
             User user = userService.findById(Long.parseLong(userId));
             if (user != null) {
@@ -45,6 +48,7 @@ public class UserController {
             @RequestHeader("x-user-id") String userId,
             @RequestBody UserDto userDTO
     ) {
+        log.info("Обновление данных профиля 'x-user-id'=" + userId);
         userService.saveUser(Long.parseLong(userId), userDTO);
         return ResponseEntity.ok().build();
     }

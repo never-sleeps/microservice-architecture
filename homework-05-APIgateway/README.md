@@ -31,7 +31,18 @@
 - использование сгенерированных случайно данных в сценарии
 - отображение данных запроса и данных ответа при запуске из командной строки с помощью newman.
 
+------------------------------------------------------------------
+#### Примечания по решению:
+
 docker images:
 - neversleeps/otus-arch-homework-05-auth
 - neversleeps/otus-arch-homework-05-users
 
+Установить зависимости, релиз и чарт:
+
+```shell script
+helm dependency update ./auth
+helm install auth ./auth
+helm dependency update ./app
+helm install app ./app
+```

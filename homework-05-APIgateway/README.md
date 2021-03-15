@@ -46,3 +46,5 @@ helm install auth ./auth
 helm dependency update ./app
 helm install app ./app
 ```
+
+![sequence-diagram.png](sequence-diagram.png.png)

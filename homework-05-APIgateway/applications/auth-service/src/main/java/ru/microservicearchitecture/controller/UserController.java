@@ -48,7 +48,10 @@ public class UserController {
      * @return ResponseEntity
      */
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserDto userDto, HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> loginUser(
+            @RequestBody UserDto userDto,
+            HttpServletResponse httpServletResponse
+    ) {
         User user = userService.findUserByLogin(userDto.getLogin());
         // Проверяем наличие пользователя с таким логином
         if (user == null) {

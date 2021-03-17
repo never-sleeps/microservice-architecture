@@ -1,0 +1,13 @@
+controller:
+  kind: DaemonSet
+
+  reportNodeInternalIp: true
+
+  daemonset:
+    useHostPort: true
+    hostPorts:
+      http: 80
+      https: 443
+
+  service:
+    type: NodePort

@@ -15,8 +15,8 @@ public class UserServiceApplication {
 
 		Properties properties = new Properties();
 		properties.load(new FileInputStream("./config/application.properties"));
-		properties.put("spring.datasource.username", System.getenv("dbusername"));
-		properties.put("spring.datasource.password", System.getenv("dbpassword"));
+		properties.put("spring.datasource.username", System.getenv("dbuser"));
+		properties.put("spring.datasource.password", System.getenv("dbpswd"));
 		application.setDefaultProperties(properties);
 
 		System.out.println("Properties loaded: " + properties);

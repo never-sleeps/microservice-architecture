@@ -1,18 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "app-chart.fullname" . }}
+  name: {{ include "auth.fullname" . }}
   labels:
-    {{- include "app-chart.labels" . | nindent 4 }}
+    {{- include "auth.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      {{- include "app-chart.selectorLabels" . | nindent 6 }}
+      {{- include "auth.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        {{- include "app-chart.selectorLabels" . | nindent 8 }}
+        {{- include "auth.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -20,18 +26,18 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           env:
             - name: dbuser
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: auth-secret
                   key: dbuser
             - name: dbpswd
               valueFrom:
                 secretKeyRef:
-                  name: app-secret
+                  name: auth-secret
                   key: dbpswd
           volumeMounts:
             - name: config-volume
@@ -39,7 +45,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: app-config
+            name: auth-config
             items:
-              - key: application.properties
-                path: application.properties
+            - key: application.properties
+              path: application.properties

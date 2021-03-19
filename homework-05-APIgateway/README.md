@@ -38,13 +38,25 @@ docker images:
 - neversleeps/otus-arch-homework-05-auth
 - neversleeps/otus-arch-homework-05-users
 
-Установить зависимости, релиз и чарт:
+В начале убедиться, что nginx ingress запущен
+```shell script
+minikube addons list
+minikube addons enable ingress
+minikube addons list
+```
 
+Установить зависимости, релиз и чарт:
 ```shell script
 helm dependency update ./auth
 helm install auth ./auth
 helm dependency update ./app
 helm install app ./app
 ```
+
+Запускаем тесты с помощью newman и проверяем, что все корректно запустилось:
+```shell script
+newman run architecture_task_5.postman_collection.json
+```
+
 
 ![sequence-diagram.png](sequence-diagram.png.png)

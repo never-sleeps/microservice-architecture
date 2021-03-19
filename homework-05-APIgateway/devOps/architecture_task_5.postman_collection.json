@@ -80,13 +80,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{base_url}}/registration",
+					"raw": "http://{{base_url}}/register",
 					"protocol": "http",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"registration"
+						"register"
 					]
 				}
 			},
@@ -372,13 +372,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{base_url}}/registration",
+					"raw": "http://{{base_url}}/register",
 					"protocol": "http",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"registration"
+						"register"
 					]
 				}
 			},

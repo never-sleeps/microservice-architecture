@@ -3,6 +3,7 @@ package ru.microservicearchitecture.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.microservicearchitecture.dto.UserDto;
@@ -30,7 +31,7 @@ public class UserController {
      * @param userDto данные пользователя
      * @return ResponseEntity
      */
-    @PostMapping("/registration")
+    @PostMapping("/register")
     private ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
         if (userService.findUserByLogin(userDto.getLogin()) != null) {
             log.warn("Пользователь с логином '" + userDto.getLogin() + "' не найден");
@@ -126,5 +127,11 @@ public class UserController {
         response.addHeader("x-user-id", String.valueOf(session.getUserId()));
         log.info("Параметр 'x-user-id'='" + session.getUserId() + "' был добавлен для сессии '" + sessionId + "'");
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE)
+    private ResponseEntity<?> signin() {
+        String body = "{\"message\": \"Please go to login and provide Login/Password\"}";
+        return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 }

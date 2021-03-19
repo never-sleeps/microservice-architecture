@@ -1,0 +1,13 @@
+replicaCount: 2
+
+fullnameOverride: "app"
+
+image:
+  repository: neversleeps/otus-arch-homework-05-users
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 9000

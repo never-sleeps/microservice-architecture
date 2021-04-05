@@ -1,0 +1,6 @@
+CREATE TABLE USERS (
+     id INTEGER NOT NULL,
+     name VARCHAR NOT NULL,
+     mail VARCHAR NOT NULL,
+     CONSTRAINT user_pk PRIMARY KEY (id)
+);

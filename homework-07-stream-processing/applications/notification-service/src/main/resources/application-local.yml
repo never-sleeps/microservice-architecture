@@ -1,0 +1,14 @@
+app:
+  database:
+    host: ${DB_HOST:localhost}
+
+#spring:
+#  kafka:
+#    consumer:
+#      group-id: order_group
+#      auto-offset-reset: earliest
+#      bootstrap-servers: ${KAFKA_BOOTSTRAP_ADDRESS:hello:9092}
+
+kafka:
+  bootstrap-address: ${KAFKA_BOOTSTRAP_ADDRESS:127.0.0.1:9092}
+

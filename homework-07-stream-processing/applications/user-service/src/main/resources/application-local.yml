@@ -1,0 +1,6 @@
+app:
+  database:
+    host: ${DB_HOST:localhost}
+  billing-service:
+    url: http://localhost:8000
+

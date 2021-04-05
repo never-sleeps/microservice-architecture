@@ -43,3 +43,10 @@
 - отображение данных запроса и данных ответа при запуске из командной строки с помощью newman.
 
 ------------------------------------------------------------------
+### Реализация
+
+docker images:
+- ```neversleeps/user-service-07```
+- ```neversleeps/billing-service-07```
+- ```neversleeps/order-service-07```
+- ```neversleeps/notification-service-07```

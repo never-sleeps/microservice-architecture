@@ -1,0 +1,18 @@
+server:
+  port: 8000
+
+app:
+  database:
+    db: ${DB_NAME:billing}
+    host: ${DB_HOST:postgres_billing}
+    port: ${DB_PORT:5436}
+    username: ${DB_USERNAME:billing}
+    password: ${DB_PASSWORD:billing}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.db}
+    username: ${app.database.username}
+    password: ${app.database.password}
+    driver-class-name: org.postgresql.Driver
+    platform: postgresql

@@ -34,24 +34,25 @@ public class BillingClient {
 
     @PostConstruct
     public void postConstruct() {
-        log.info(String.format("Billing client: url '%s', token '%s'", url, token));
+        log.info(String.format("Billing client Url: %s", url));
+        log.info(String.format("Billing client Token: %s", token));
     }
 
-    public void createBillingAccount(CreateBillingAccountRequest request) {
+    public void createBillingAccount(CreateBillingAccountRequest createBillingAccountRequest) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("x-service-token", token);
-        HttpEntity<CreateBillingAccountRequest> requestHttpEntity = new HttpEntity<>(request, httpHeaders);
-
+        HttpEntity<CreateBillingAccountRequest> requestHttpEntity = new HttpEntity<>(createBillingAccountRequest, httpHeaders);
         try {
             String host = String.format("%s/billing/accounts", url);
+            log.info("Sending update user request: {}", host);
             ResponseEntity<?> result = restTemplate.exchange(host, HttpMethod.POST, requestHttpEntity, Void.class);
             if (!result.getStatusCode().equals(HttpStatus.CREATED)) {
                 throw new IllegalStateException();
             }
         } catch (Exception e) {
-            log.info("Ошибка создания счёта пользователя: {}", e.getLocalizedMessage());
+            log.info("User update failure: {}", e.getLocalizedMessage());
             throw new IllegalStateException();
         }
-        log.info("Создание счёта пользователя выполнено успешно");
+        log.info("User update success");
     }
 }

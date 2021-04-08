@@ -2,8 +2,8 @@ package com.microservicearchitecture.messaging.handlers;
 
 import com.microservicearchitecture.messaging.DomainEventHandler;
 import com.microservicearchitecture.messaging.OrderCreatedEvent;
-import com.microservicearchitecture.persistence.entity.Notification;
-import com.microservicearchitecture.persistence.repositories.NotificationRepository;
+import com.microservicearchitecture.persistence.entity.NotificationEntity;
+import com.microservicearchitecture.persistence.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +18,11 @@ public class OrderCreatedHandler implements DomainEventHandler<OrderCreatedEvent
     }
 
     public void process(OrderCreatedEvent event) {
-        Notification entity = Notification.builder()
-                .status(event.getStatus())
-                .orderId(event.getOrderId())
-                .mail(event.getMail())
-                .userId(event.getUserId())
-                .build();
-        notificationRepository.save(entity);
+        NotificationEntity notificationEntity = new NotificationEntity();
+        notificationEntity.setStatus(event.getStatus());
+        notificationEntity.setOrderId(event.getOrderId());
+        notificationEntity.setEmail(event.getEmail());
+        notificationEntity.setUserId(event.getUserId());
+        notificationRepository.save(notificationEntity);
     }
 }

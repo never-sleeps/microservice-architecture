@@ -7,13 +7,16 @@ import com.microservicearchitecture.dto.response.CreateAccountResponse;
 import com.microservicearchitecture.dto.response.GetAccountResponse;
 import com.microservicearchitecture.service.BillingAccountService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import javax.validation.Valid;
+import java.util.List;
+
+
 @RestController
 @AllArgsConstructor
+@RequestMapping("/billing/accounts")
 public class BillingAccountController {
 
     private final BillingAccountService accountService;
@@ -21,51 +24,60 @@ public class BillingAccountController {
     /**
      * Создание счёта пользователя
      * @param request данные счёта пользователя
-     * @return данные счёта пользователя
+     * @return данные созданного счёта
      */
-    @PostMapping("/billing/accounts")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateAccountResponse createAccount(@RequestBody CreateAccountRequest request) {
-        log.info("Создание счета для пользователя с id = " + request.getUserId());
+    public CreateAccountResponse createAccount(
+            @Valid @RequestBody CreateAccountRequest request
+    ) {
         return accountService.createAccount(request);
     }
 
     /**
-     * Получение счёта пользователя по id пользователя
-     * @param userId id пользователя
-     * @return данные счёта пользователя
+     * Получение списка всех счетов
+     * @return список всех счетов
      */
-    @GetMapping("/billing/accounts/{userId}")
-    public GetAccountResponse findAccountByUserId(@PathVariable Long userId) {
-        log.info("Получение данных счёта для пользователя с с id = " + userId);
+    @GetMapping
+    public List<GetAccountResponse> findAllAccounts() {
+        return accountService.findAllAccounts();
+    }
+
+    /**
+     * Получение данных счёта по id пользователя
+     * @param userId id пользователя
+     * @return данные счета
+     */
+    @GetMapping("/{userId}")
+    public GetAccountResponse findAccountByUserId(
+            @PathVariable Long userId
+    ) {
         return accountService.findAccountByUserId(userId);
     }
 
     /**
-     * Пополнение счёта пользователя
+     * Пополнение счёта
      * @param userId id пользователя
      * @param request данные пополнения
      */
-    @PostMapping("/billing/accounts/{userId}/deposit")
+    @PostMapping("/{userId}/deposit")
     public void depositMoney(
             @PathVariable Long userId,
-            @RequestBody DepositMoneyRequest request
+            @Valid @RequestBody DepositMoneyRequest request
     ) {
-        log.info("Изменение счёта пользователя с id = " + userId + ": + " + request.getAmount());
         accountService.deposit(userId, request);
     }
 
     /**
-     * Снятие со счёта пользователя
-     * @param userId id пользователя
+     * Снятие со счёта
+     * @param id id пользователя
      * @param request данные снятия
      */
-    @PostMapping("/billing/accounts/{userId}/withdraw")
+    @PostMapping("/{id}/withdraw")
     public void withdraw(
-            @PathVariable Long userId,
-            @RequestBody WithdrawMoneyRequest request
+            @PathVariable Long id,
+            @Valid @RequestBody WithdrawMoneyRequest request
     ) {
-        log.info("Изменение счёта пользователя с id = " + userId + ": -" + request.getAmount());
-        accountService.withdraw(userId, request);
+        accountService.withdraw(id, request);
     }
 }

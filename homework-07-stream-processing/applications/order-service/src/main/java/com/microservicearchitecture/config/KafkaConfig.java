@@ -1,8 +1,8 @@
 package com.microservicearchitecture.config;
 
 import com.microservicearchitecture.messaging.OrderCreatedEvent;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -20,10 +20,10 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
-@Data
 @Configuration
 @ConfigurationProperties("kafka")
+@Getter
+@Setter
 public class KafkaConfig {
 
     private String bootstrapAddress;
@@ -33,7 +33,6 @@ public class KafkaConfig {
         if (bootstrapAddress == null) {
             throw new IllegalStateException("Kafka bootstrap url cannot be null!");
         }
-        log.info("Kafka url: {}", bootstrapAddress);
     }
 
     @Bean

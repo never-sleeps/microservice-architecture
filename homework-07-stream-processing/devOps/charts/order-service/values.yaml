@@ -1,0 +1,37 @@
+replicaCount: 1
+
+postgresql:
+  fullnameOverride: order-postgres
+  postgresqlUsername: order-architect
+  postgresqlPassword: order-architect
+  postgresqlDatabase: order-architect
+  service:
+    type: NodePort
+    port: 5437
+  persistence: 
+    enabled: true
+    size: 1Gi
+  resources: 
+    requests: 
+      memory: 256Mi
+      cpu: 250m
+
+db: 
+  host: "order-postgres"
+  database: "order-architect"
+  username: "order-architect"
+  password: "order-architect" 
+  port: "5437"
+
+messaging:
+  kafkaUrl: http://kafka.messaging.svc.cluster.local:9092
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+# ingress:
+#   enabled: false
+#   hosts:
+#     - host: arch.homework
+#       paths: ["/"]

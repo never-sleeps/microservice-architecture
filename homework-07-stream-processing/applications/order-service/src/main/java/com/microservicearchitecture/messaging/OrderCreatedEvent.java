@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class OrderCreatedEvent {
+public class OrderCreatedEvent implements DomainEvent {
     @JsonProperty("userId")
     private final Long userId;
 
-    @JsonProperty("mail")
-    private final String mail;
+    @JsonProperty("email")
+    private final String email;
 
     @JsonProperty("orderId")
     private final Long orderId;

@@ -8,6 +8,7 @@ app:
     port: ${DB_PORT:5437}
     username: ${DB_USERNAME:order}
     password: ${DB_PASSWORD:order}
+    migration-enabled: ${DB_MIGRATION_ENABLED:false}
 
 client:
   billing-service:

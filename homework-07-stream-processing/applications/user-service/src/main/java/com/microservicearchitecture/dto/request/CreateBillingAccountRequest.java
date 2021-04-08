@@ -7,5 +7,5 @@ import lombok.Getter;
 @Builder
 public class CreateBillingAccountRequest {
     private final Long userId;
-    private final String mail;
+    private final String email;
 }

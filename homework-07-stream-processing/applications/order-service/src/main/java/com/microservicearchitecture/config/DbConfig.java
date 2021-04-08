@@ -1,14 +1,14 @@
 package com.microservicearchitecture.config;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-@Slf4j
-@Data
+@Getter
+@Setter
 @Configuration
 @ConfigurationProperties("app.database")
 public class DbConfig {
@@ -18,12 +18,12 @@ public class DbConfig {
     private String username;
     private String password;
     private Integer port;
+    private boolean migrationEnabled;
 
     @PostConstruct
     public void postConstruct() {
-        log.info(String.format(
-                "Database: '%s'. Host: '%s'. Username: '%s'. Password: '%s'. Port: '%s'",
-                db, host, username, password, port
-        ));
+        if (db == null || host == null || username == null || password == null || port == null) {
+            throw new IllegalStateException("Some of the database configurations not set!");
+        }
     }
 }

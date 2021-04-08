@@ -14,8 +14,8 @@ public class OrderCreatedEvent implements DomainEvent {
     @JsonProperty("userId")
     private Long userId;
 
-    @JsonProperty("mail")
-    private String mail;
+    @JsonProperty("email")
+    private String email;
 
     @JsonProperty("orderId")
     private Long orderId;

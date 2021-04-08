@@ -1,18 +1,17 @@
 package com.microservicearchitecture.controller;
 
-import com.microservicearchitecture.service.OrderService;
 import com.microservicearchitecture.dto.request.CreateOrderRequest;
+import com.microservicearchitecture.dto.response.CreateOrderResponse;
+import com.microservicearchitecture.service.OrderService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import javax.validation.Valid;
+import java.util.List;
+
 @RestController
-@RequestMapping("/orders")
 @AllArgsConstructor
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -22,8 +21,16 @@ public class OrderController {
      * @param request данные заказа
      */
     @PostMapping
-    public void createOrder(@RequestBody CreateOrderRequest request) {
-        log.info("Создание заказа для пользователя userId=" + request.getUserId());
-        orderService.createOrder(request);
+    public CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
+        return orderService.createOrder(request);
+    }
+
+    /**
+     * Получение списка всех заказов
+     * @return данные всех заказов
+     */
+    @GetMapping
+    public List<CreateOrderResponse> findAllOrders() {
+        return orderService.findAllOrders();
     }
 }

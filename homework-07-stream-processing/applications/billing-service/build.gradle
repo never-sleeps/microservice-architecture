@@ -1,10 +1,10 @@
 buildscript {
     ext {
         springBootVersion = '2.3.1.RELEASE'
+        micrometerVersion: '0.11.0.RELEASE'
     }
 
     repositories {
-        mavenLocal()
         mavenCentral()
         maven { url 'https://repo.spring.io/plugins-release' }
         maven { url 'https://plugins.gradle.org/m2/' }
@@ -44,11 +44,6 @@ configurations {
 
 repositories {
     mavenCentral()
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
     maven { url 'https://repo.spring.io/plugins-release' }
     maven { url 'https://plugins.gradle.org/m2/' }
     maven { url 'https://jitpack.io' }
@@ -61,8 +56,14 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVersion
     annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVersion
 
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+
     implementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+    // metrics
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.3.2.RELEASE'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.5.3'
 
     implementation group: 'com.github.javafaker', name: 'javafaker', version: '0.15'
 

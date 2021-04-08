@@ -28,7 +28,7 @@ public class OrderNotificationListener {
     )
     public void listen(OrderCreatedEvent event) {
         orderCreatedHandler.process(event);
-        log.info("Сообщение успешно обработано");
+        log.info("Message successfully processed!");
     }
 
     private static String typeIdHeader(Headers headers) {

@@ -11,7 +11,7 @@ import java.time.Instant;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class BaseEntity {
+public class BaseEntity {
 
     @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt = Instant.now();

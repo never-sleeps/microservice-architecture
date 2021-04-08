@@ -1,4 +1,4 @@
-CREATE TABLE orders (
+CREATE TABLE "public"."order" (
     id BIGINT NOT NULL,
     price DECIMAL NOT NULL,
     user_id BIGINT NOT NULL,
@@ -6,3 +6,5 @@ CREATE TABLE orders (
     updated_at TIMESTAMP,
     CONSTRAINT order_pk PRIMARY KEY (id)
 );
+
+CREATE SEQUENCE order_id_seq START WITH 1 INCREMENT BY 1;

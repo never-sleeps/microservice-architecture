@@ -1,18 +1,12 @@
 package com.microservicearchitecture.dto.response;
 
-import com.microservicearchitecture.persistence.entity.Account;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
+@Builder
 public class CreateAccountResponse {
     private final Long id;
-    private String mail;
+    private String email;
     private Long userId;
-
-    public CreateAccountResponse(Account account) {
-        this.id = account.getId();
-        this.mail = account.getMail();
-        this.userId = account.getUserId();
-    }
 }

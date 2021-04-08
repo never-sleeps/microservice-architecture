@@ -1,11 +1,16 @@
 package com.microservicearchitecture.dto.request;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Getter
+@Setter
 public class CreateAccountRequest {
-    private String mail;
+    @NotBlank
+    private String email;
+    @NotNull
     private Long userId;
 }

@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "4f2be6d1-cbd1-44c7-ac03-634ce3719219",
+		"name": "User Billing Order Notification SERVICES API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"phone\", '+' + _.random(10000000000000, 99999999999999));",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'));",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+							"pm.collectionVariables.set(\"username\", pm.variables.replaceIn('{{$randomUserName}}'))",
+							"",
+							"postman.setGlobalVariable(\"api_info\", () => {",
+							"    tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true;",
+							"    tests[\"[INFO] Response: \" + responseBody] = true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should create user and receive 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"    pm.collectionVariables.set(\"userId\", jsonData[\"id\"]);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"phone\": \"{{phone}}\",\n    \"firstName\": \"{{firstName}}\",\n    \"lastName\": \"{{lastName}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find user by id\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"username\");",
+							"    pm.expect(jsonData).to.have.property(\"firstName\");",
+							"    pm.expect(jsonData).to.have.property(\"lastName\");",
+							"    pm.expect(jsonData).to.have.property(\"email\");",
+							"    pm.expect(jsonData).to.have.property(\"phone\");",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get billing account by userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find account by user id\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"    pm.expect(jsonData).to.have.property(\"email\");",
+							"    pm.expect(jsonData).to.have.property(\"balance\");",
+							"    pm.expect(jsonData[\"balance\"]).to.equal(0);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/billing/accounts/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"accounts",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send deposit for account by userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should send deposit money for account by user id\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"amount\", 100);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": {{amount}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/billing/accounts/{{userId}}/deposit",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"accounts",
+						"{{userId}}",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get billing account by userId after deposit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find account by user id after deposit\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"    pm.expect(jsonData).to.have.property(\"email\");",
+							"    pm.expect(jsonData).to.have.property(\"balance\");",
+							"    pm.expect(jsonData[\"balance\"]).to.equal(pm.collectionVariables.get(\"amount\"));",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/billing/accounts/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"accounts",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order for userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should create order\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"    pm.expect(jsonData).to.have.property(\"price\");",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"    pm.expect(jsonData[\"price\"]).to.equal(50);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"orderPrice\", 50);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": {{userId}},\n    \"price\": {{orderPrice}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get billing after order success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"tapp should find account by user id after creating order\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"    pm.expect(jsonData).to.have.property(\"email\");",
+							"    pm.expect(jsonData).to.have.property(\"balance\");",
+							"",
+							"    var expectedBalance = pm.collectionVariables.get(\"amount\") - pm.collectionVariables.get(\"orderPrice\");",
+							"    pm.expect(jsonData[\"balance\"]).to.equal(expectedBalance);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/billing/accounts/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"accounts",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get notifications",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find notification with state success\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"    ",
+							"    var userId = pm.collectionVariables.get(\"userId\");",
+							"    var notification = jsonData[jsonData.length - 1];",
+							"    ",
+							"    pm.expect(notification[\"userId\"]).to.equal(userId);",
+							"    pm.expect(notification[\"state\"]).to.equal(\"SUCCESS\");",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john.doe\",\n    \"email\": \"test@mail.com\",\n    \"phone\": \"123\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/notifications",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create order with account balance exception",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should create order\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"orderPrice\", 50);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": {{userId}},\n    \"price\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get billing after order failure",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find account by id after successful creating order\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"userId\");",
+							"    pm.expect(jsonData).to.have.property(\"email\");",
+							"    pm.expect(jsonData).to.have.property(\"balance\");",
+							"",
+							"    var expectedBalance = pm.collectionVariables.get(\"amount\") - pm.collectionVariables.get(\"orderPrice\");",
+							"    pm.expect(jsonData[\"balance\"]).to.equal(expectedBalance);",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/billing/accounts/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"accounts",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get notifications",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"app should find notification with state FAILURE\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"    ",
+							"    var userId = pm.collectionVariables.get(\"userId\");",
+							"    var notification = jsonData[jsonData.length - 1];",
+							"    ",
+							"    pm.expect(notification[\"userId\"]).to.equal(userId);",
+							"    pm.expect(notification[\"state\"]).to.equal(\"FAILURE\");",
+							"});",
+							"",
+							"eval(pm.globals.get(\"api_info\"))();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john.doe\",\n    \"email\": \"test@mail.com\",\n    \"phone\": \"123\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/notifications",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "phone",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "amount",
+			"value": ""
+		},
+		{
+			"key": "orderPrice",
+			"value": ""
+		},
+		{
+			"key": "baseUrl",
+			"value": "arch.homework"
+		}
+	]
+}

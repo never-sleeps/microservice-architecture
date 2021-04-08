@@ -1,0 +1,37 @@
+replicaCount: 1
+
+postgresql:
+  fullnameOverride: notification-postgres
+  postgresqlUsername: notification-architect
+  postgresqlPassword: notification-architect
+  postgresqlDatabase: notification-architect
+  service:
+    type: NodePort
+    port: 5438
+  persistence: 
+    enabled: true
+    size: 1Gi
+  resources: 
+    requests: 
+      memory: 512Mi
+      cpu: 500m
+
+db: 
+  host: "notification-postgres"
+  database: "notification-architect"
+  username: "notification-architect"
+  password: "notification-architect" 
+  port: "5438"
+
+messaging:
+  kafkaUrl: http://kafka.messaging.svc.cluster.local:9092
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+# ingress:
+#   enabled: false
+#   hosts:
+#     - host: arch.homework
+#       paths: ["/"]

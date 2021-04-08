@@ -1,0 +1,12 @@
+version: '2.0'
+services:
+  db:
+    container_name: billing_postgres
+    image: postgres:11
+    ports:
+      - "5436:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: billing
+      POSTGRES_USER: billing
+      POSTGRES_DB: billing

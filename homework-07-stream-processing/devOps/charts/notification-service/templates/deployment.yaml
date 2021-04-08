@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: notification-app
+  template: 
+    metadata:
+      labels: 
+        app: notification-app
+    spec: 
+      containers: 
+      - name: notification-backend
+        image: neversleeps/notification-service-07:1
+        ports: 
+        - name: web
+          containerPort: 8002
+        livenessProbe:
+          httpGet:
+            port: 8002
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8002
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        env: 
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: notification-secret
+                key: database
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: notification-secret
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: notification-secret
+                key: port
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: notification-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: notification-secret
+                key: password
+          - name: KAFKA_BOOTSTRAP_ADDRESS
+            valueFrom:
+              secretKeyRef:
+                name: notification-messaging-secret
+                key: kafkaUrl

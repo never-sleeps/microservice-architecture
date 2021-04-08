@@ -1,0 +1,39 @@
+server:
+  port: 8001
+
+app:
+  database:
+    db: ${DB_NAME:order}
+    host: ${DB_HOST:postgres_order}
+    port: ${DB_PORT:5437}
+    username: ${DB_USERNAME:order}
+    password: ${DB_PASSWORD:order}
+    migration-enabled: ${DB_MIGRATION_ENABLED:false}
+
+client:
+  billing-service:
+    url: http://billing-service.dev.svc.cluster.local:8000
+    token: testrandomtest
+  user-service:
+    url: http://user-service.dev.svc.cluster.local:8000
+    token: testrandomtest
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.db}
+    username: ${app.database.username}
+    password: ${app.database.password}
+    driver-class-name: org.postgresql.Driver
+    platform: postgresql
+    hikari:
+      maximum-pool-size: ${HIKARI_MAX_POOL_SIZE:25}
+      pool-name: ${HIKARI_POOL_NAME:HikariPostgresPool}
+      minimum-idle: ${HIKARI_MIN_IDLE:10}
+
+kafka:
+  bootstrap-address: ${KAFKA_BOOTSTRAP_ADDRESS:}
+
+logging:
+  level:
+    com:
+      zaxxer: WARN

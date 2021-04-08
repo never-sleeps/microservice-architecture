@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: user-app
+  template: 
+    metadata:
+      labels: 
+        app: user-app
+    spec: 
+      containers: 
+      - name: user-backend
+        image: neversleeps/user-service-07:1
+        ports: 
+        - name: web
+          containerPort: 8003
+        livenessProbe:
+          httpGet:
+            port: 8003
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8003
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        env: 
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: user-secret
+                key: database
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: user-secret
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: user-secret
+                key: port
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: user-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: user-secret
+                key: password

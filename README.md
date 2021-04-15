@@ -7,7 +7,7 @@
 3. **[Prometheus. Grafana](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-03)**
 4. **[Service mesh на примере Istio](https://github.com/never-sleeps/microservice-architecture-istio)**
 5. **[Backend for frontends. Apigateway](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-05-APIgateway)**
-6. **[Stream processing](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-07-stream-processing)**
+6. **[Stream processing](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-06-stream-processing)**
 7. Идемпотетность и коммутативность API в HTTP и очередях
 8. Паттерны декомпозиции микросервисов
 9. Распределенные транзакции

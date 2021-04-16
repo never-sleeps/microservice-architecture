@@ -192,4 +192,4 @@ User-Billing-Order-Notification-SERVICES-API
 }
   ✓  [INFO] Response: [{"state":"SUCCESS","orderId":1,"userId":1,"email":"Neha_Larkin55@yahoo.com"},{"state":"FAILURE","orderId":null,"userId":1,"email":"Neha_Larkin55@yahoo.com"}]
 ```
-![newman_result.png](./readme.asserts/newman-resilts.png)
+![newman_result.png](readme.asserts/newman-results.png)

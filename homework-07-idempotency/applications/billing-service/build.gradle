@@ -1,0 +1,95 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.1.RELEASE'
+        micrometerVersion: '0.11.0.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/plugins-release' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: springBootVersion
+        classpath group: "se.transmode.gradle", name: "gradle-docker", version: "1.2"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+jar {
+    archivesBaseName = 'billing-service'
+}
+
+group = 'com.microservice-architecture'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'docker'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/plugins-release' }
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVersion
+    annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: springBootVersion
+
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+    // metrics
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.3.2.RELEASE'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.5.3'
+
+    implementation group: 'com.github.javafaker', name: 'javafaker', version: '0.15'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testCompile("org.assertj:assertj-core:3.11.1")
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = false
+    tag = 'billing-service'
+    tagVersion = 'latest'
+    applicationName = jar.archiveBaseName
+    dockerfile = file('./Dockerfile')
+    doFirst {
+        copy {
+            from "build/libs"
+            into stageDir
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

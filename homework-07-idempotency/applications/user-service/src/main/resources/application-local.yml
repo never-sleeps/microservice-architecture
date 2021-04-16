@@ -1,0 +1,9 @@
+app:
+  database:
+    host: ${DB_HOST:localhost}
+
+client:
+  billing-service:
+    url: http://localhost:8000
+    token: testrandomtest
+

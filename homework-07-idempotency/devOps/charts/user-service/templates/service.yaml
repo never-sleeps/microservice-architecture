@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: user-service
+  labels: 
+    app: user-service
+spec: 
+  selector: 
+    app: user-app
+  ports: 
+  - protocol: TCP
+    port: 8000
+    targetPort: web
+    name: web
+  type: NodePort

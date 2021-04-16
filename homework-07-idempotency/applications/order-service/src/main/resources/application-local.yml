@@ -1,0 +1,20 @@
+app:
+  database:
+    host: ${DB_HOST:localhost}
+    migration-enabled: ${DB_MIGRATION_ENABLED:true}
+
+client:
+  billing-service:
+    url: http://localhost:8000
+    token: testrandomtest
+  user-service:
+    url: http://localhost:8003
+    token: testrandomtest
+
+kafka:
+  bootstrap-address: ${KAFKA_BOOTSTRAP_ADDRESS:127.0.0.1:9092}
+
+redis:
+  host: ${REDIS_HOSTNAME:localhost}
+  port: ${REDIS_PORT:6379}
+  password: ${REDIS_PASSWORD:order_pass}

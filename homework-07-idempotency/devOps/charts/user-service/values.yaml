@@ -1,0 +1,34 @@
+replicaCount: 1
+
+postgresql:
+  fullnameOverride: user-postgres
+  postgresqlUsername: user-architect
+  postgresqlPassword: user-architect
+  postgresqlDatabase: user-architect
+  service:
+    type: NodePort
+    port: 5434
+  persistence: 
+    enabled: true
+    size: 1Gi
+  resources: 
+    requests: 
+      memory: 256Mi
+      cpu: 250m
+
+db: 
+  host: "user-postgres"
+  database: "user-architect"
+  username: "user-architect"
+  password: "user-architect" 
+  port: "5434"
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+ingress:
+  enabled: false
+  hosts:
+    - host: arch.homework
+      paths: ["/"]

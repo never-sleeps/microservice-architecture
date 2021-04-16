@@ -30,6 +30,7 @@
 - ```neversleeps/notification-service-07-2```
 
 ### Запуск
+выполняется внутри папки devOps
 ```shell script
 minikube start --cpus=6 --memory=6g --vm-driver=hyperkit
 eval $(minikube docker-env)

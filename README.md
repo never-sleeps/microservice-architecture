@@ -9,6 +9,6 @@
 5. **[Backend for frontends. Apigateway](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-05-APIgateway)**
 6. **[Stream processing](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-06-stream-processing)**
 7. **[Идемпотетность и коммутативность API в HTTP и очередях](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-07-idempotency)**
-8. Паттерны декомпозиции микросервисов
+8. **[Паттерны декомпозиции микросервисов](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-08-decomposition-of-microservices)**
 9. Распределенные транзакции
 10. Event Sourcing и CQRS

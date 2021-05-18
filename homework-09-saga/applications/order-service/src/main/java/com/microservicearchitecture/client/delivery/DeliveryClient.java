@@ -49,7 +49,7 @@ public class DeliveryClient {
         httpHeaders.add("x-service-token", token);
         HttpEntity<DeliveryRequest> requestHttpEntity = new HttpEntity<>(request, httpHeaders);
         try {
-            String host = String.format("%s/delivery/delivery/send", url);
+            String host = String.format("%s/delivery/send", url);
             log.info("Sending create delivery request: {}", host);
             ResponseEntity<Void> result = restTemplate.exchange(host, HttpMethod.POST, requestHttpEntity, Void.class);
             if (result.getStatusCode().equals(HttpStatus.OK)) {

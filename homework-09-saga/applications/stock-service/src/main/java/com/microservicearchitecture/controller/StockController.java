@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/goods")
+@RequestMapping("/stock")
 public class StockController {
 
     /**
      * Резервирование товаров
      */
-    @GetMapping("/reserve")
+    @PostMapping("/reserve")
     public void reserve(@RequestBody ReserveRequest request) {
         log.info("Резервирование товаров");
         if (request.getPrice().compareTo(BigDecimal.valueOf(500)) == 0) {
@@ -30,7 +30,7 @@ public class StockController {
     /**
      * Отмена резервирования товаров
      */
-    @GetMapping("/unreserve")
+    @PostMapping("/unreserve")
     public void unreserve(@RequestBody UnreserveRequest request) {
         log.info("Отмена резервирования товаров");
     }

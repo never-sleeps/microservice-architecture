@@ -1,0 +1,16 @@
+apiVersion: v2
+name: stock-service
+description: Stock service
+
+type: application
+version: 0.0.3
+appVersion: 3
+
+dependencies:
+  - name: postgresql
+    version: 8.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    tags:
+      - stock-database
+

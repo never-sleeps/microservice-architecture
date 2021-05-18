@@ -1,0 +1,22 @@
+apiVersion: v2
+name: order-service
+description: Order service
+
+type: application
+version: 0.0.3
+appVersion: 3
+
+dependencies:
+  - name: postgresql
+    version: 8.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    tags:
+      - order-database
+  - name: redis
+    version: 11.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+    tags:
+      - order-redis
+

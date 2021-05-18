@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: delivery-app
+  template: 
+    metadata:
+      labels: 
+        app: delivery-app
+    spec: 
+      containers: 
+      - name: delivery-backend
+        image: neversleeps/delivery-service-09:1
+        ports: 
+        - name: web
+          containerPort: 8005
+        livenessProbe:
+          httpGet:
+            port: 8005
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8005
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        env: 
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: delivery-secret
+                key: database
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: delivery-secret
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: delivery-secret
+                key: port
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: delivery-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: delivery-secret
+                key: password

@@ -1,2 +1,18 @@
 server:
   port: 8005
+
+app:
+  database:
+    db: ${DB_NAME:delivery}
+    host: ${DB_HOST:postgres}
+    port: ${DB_PORT:5434}
+    username: ${DB_USERNAME:delivery}
+    password: ${DB_PASSWORD:delivery}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.db}
+    username: ${app.database.username}
+    password: ${app.database.password}
+    driver-class-name: org.postgresql.Driver
+    platform: postgresql

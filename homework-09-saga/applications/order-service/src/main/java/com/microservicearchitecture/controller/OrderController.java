@@ -35,4 +35,16 @@ public class OrderController {
     public List<CreateOrderResponse> findAllOrders() {
         return orderService.findAllOrders();
     }
+
+    /**
+     * Получение заказа по id
+     * @id - id заказа
+     * @return заказ
+     */
+    @GetMapping("/{id}")
+    public CreateOrderResponse findOrderById(
+            @PathVariable Long id
+    ) {
+        return orderService.findOrderById(id);
+    }
 }

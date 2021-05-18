@@ -24,5 +24,5 @@ public class OrderEntity extends BaseEntity {
     private Long userId;
 
     @Column(name = "status")
-    private OrderStatus status = OrderStatus.PENDING;
+    private OrderStatus status;
 }

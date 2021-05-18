@@ -1,0 +1,34 @@
+replicaCount: 1
+
+postgresql:
+  fullnameOverride: delivery-postgres
+  postgresqlUsername: delivery-architect
+  postgresqlPassword: delivery-architect
+  postgresqlDatabase: delivery-architect
+  service:
+    type: NodePort
+    port: 5434
+  persistence: 
+    enabled: true
+    size: 1Gi
+  resources: 
+    requests: 
+      memory: 256Mi
+      cpu: 250m
+
+db: 
+  host: "delivery-postgres"
+  database: "delivery-architect"
+  username: "delivery-architect"
+  password: "delivery-architect"
+  port: "5434"
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+ingress:
+  enabled: false
+  hosts:
+    - host: arch.homework
+      paths: ["/"]

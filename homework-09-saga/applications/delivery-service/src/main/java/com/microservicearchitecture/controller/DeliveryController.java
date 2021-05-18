@@ -1,6 +1,5 @@
 package com.microservicearchitecture.controller;
 
-
 import com.microservicearchitecture.dto.request.DeliveryRequest;
 import com.microservicearchitecture.exceptions.DeliveryException;
 import lombok.AllArgsConstructor;
@@ -16,11 +15,11 @@ public class DeliveryController {
     /**
      * Доставка заказа
      */
-    @GetMapping("/send")
+    @PostMapping("/send")
     public void reserve(@RequestBody DeliveryRequest request) {
         log.info("Доставка заказа");
         if (request.getAddress().contains("тест")) {
-            throw new DeliveryException("Имитация ошибки при доставке (срабатывает, если адрес содержит 'тест'");
+            throw new DeliveryException("Имитация ошибки при доставке (срабатывает, если адрес содержит 'тест')");
         }
     }
 }

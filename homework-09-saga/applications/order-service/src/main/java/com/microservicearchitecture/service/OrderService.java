@@ -83,7 +83,7 @@ public class OrderService {
         order.setPrice(request.getPrice());
         order.setUserId(request.getUserId());
         order.setStatus(OrderStatus.PENDING);
-        order = orderRepository.save(order);
+        order = orderRepository.saveAndFlush(order);
 
         boolean isSuccessPayment = makePayment(request);
         if (!isSuccessPayment) {
@@ -117,7 +117,7 @@ public class OrderService {
         }
         log.info("Произведена доставка заказа для orderId=" + order.getId());
         order = transferOrderToStatus(order, OrderStatus.DELIVERED_TO_CLIENT);
-        sendNotification(order.getId(), userResponse.getEmail(), userResponse.getId(), NotificationType.DELIVERY_ERROR);
+        sendNotification(order.getId(), userResponse.getEmail(), userResponse.getId(), NotificationType.SUCCESS);
 
         return order;
     }
@@ -183,15 +183,13 @@ public class OrderService {
 
 
     private void cancelOrder(OrderEntity order){
-        log.info(String.format("Изменение статуса заказа: orderId=%s, %s > CANCELLED", order.getId(), order.getStatus()));
-        order.setStatus(OrderStatus.CANCELLED);
-        orderRepository.save(order);
+        transferOrderToStatus(order, OrderStatus.CANCELLED);
     }
 
     private OrderEntity transferOrderToStatus(OrderEntity order, OrderStatus status) {
         log.info(String.format("Изменение статуса заказа: orderId=%s, %s > %s", order.getId(), order.getStatus(), status));
         order.setStatus(status);
-        return orderRepository.save(order);
+        return orderRepository.saveAndFlush(order);
     }
 
     /**
@@ -203,6 +201,17 @@ public class OrderService {
         return orderRepository.findAll().stream()
                 .map(CreateOrderResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Получение заказа по id
+     * @return заказ
+     */
+    public CreateOrderResponse findOrderById(Long id) {
+        log.info("Получение заказа по id");
+        OrderEntity orderEntity = orderRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Order with id=%d not found", id)));
+        return new CreateOrderResponse(orderEntity);
     }
 
     /**

@@ -41,6 +41,7 @@ dependencies {
 
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: swaggerVersion
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: swaggerVersion
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
     implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.5.4.RELEASE'
 

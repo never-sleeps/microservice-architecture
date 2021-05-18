@@ -1,7 +1,7 @@
 package com.microservicearchitecture.dto.request;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * Сейчас необходима какая-то информация, на основе которой будет генериться ошибка в сервисе stock-service
  */
 @Getter
-@Builder
+@Setter
 public class ReserveRequest {
     private BigDecimal price;
 }

@@ -50,7 +50,7 @@ public class StockClient {
         httpHeaders.add("x-service-token", token);
         HttpEntity<ReserveRequest> requestHttpEntity = new HttpEntity<>(request, httpHeaders);
         try {
-            String host = String.format("%s/stock/goods/reserve", url);
+            String host = String.format("%s/stock/reserve", url);
             log.info("Sending create reserve request: {}", host);
             ResponseEntity<Void> result = restTemplate.exchange(host, HttpMethod.POST, requestHttpEntity, Void.class);
             if (result.getStatusCode().equals(HttpStatus.OK)) {
@@ -72,7 +72,7 @@ public class StockClient {
         httpHeaders.add("x-service-token", token);
         HttpEntity<UnreserveRequest> requestHttpEntity = new HttpEntity<>(request, httpHeaders);
         try {
-            String host = String.format("%s/stock/goods/unreserve", url);
+            String host = String.format("%s/stock/unreserve", url);
             log.info("Sending create reserve request: {}", host);
             ResponseEntity<Void> result = restTemplate.exchange(host, HttpMethod.POST, requestHttpEntity, Void.class);
             if (result.getStatusCode().equals(HttpStatus.OK)) {

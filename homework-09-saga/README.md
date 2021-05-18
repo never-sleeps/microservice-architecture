@@ -50,7 +50,9 @@ _Для справки:
 minikube start --cpus=6 --memory=6g --vm-driver=hyperkit
 eval $(minikube docker-env)
 docker ps
+```
 
+```shell script
 kubectl create namespace messaging
 kubectl config set-context --current --namespace=messaging
 

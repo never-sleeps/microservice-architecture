@@ -1,0 +1,12 @@
+version: '2.0'
+services:
+  db:
+    container_name: stock_postgres
+    image: postgres:11
+    ports:
+      - "5434:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: stock
+      POSTGRES_USER: stock
+      POSTGRES_DB: stock

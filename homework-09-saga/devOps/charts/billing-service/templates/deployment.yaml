@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: billing-app
+  template: 
+    metadata:
+      labels: 
+        app: billing-app
+    spec: 
+      containers: 
+      - name: billing-backend
+        image: neversleeps/billing-service-09:1
+        ports: 
+        - name: web
+          containerPort: 8000
+        livenessProbe:
+          httpGet:
+            port: 8000
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8000
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        env: 
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: billing-secret
+                key: database
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: billing-secret
+                key: host
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: billing-secret
+                key: port
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: billing-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: billing-secret
+                key: password

@@ -1,0 +1,23 @@
+server:
+  port: 8003
+
+app:
+  database:
+    db: ${DB_NAME:user}
+    host: ${DB_HOST:postgres}
+    port: ${DB_PORT:5434}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:user}
+
+client:
+  billing-service:
+    url: http://billing-service.dev.svc.cluster.local:8000
+    token: testrandomtest
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.db}
+    username: ${app.database.username}
+    password: ${app.database.password}
+    driver-class-name: org.postgresql.Driver
+    platform: postgresql

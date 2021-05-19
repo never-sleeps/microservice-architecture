@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: billing-service
+  labels: 
+    app: billing-service
+spec: 
+  selector: 
+    app: billing-app
+  ports: 
+  - protocol: TCP
+    port: 8000
+    targetPort: web
+    name: web
+  type: NodePort

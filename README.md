@@ -10,5 +10,5 @@
 6. **[Stream processing](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-06-stream-processing)**
 7. **[Идемпотетность и коммутативность API в HTTP и очередях](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-07-idempotency)**
 8. **[Паттерны декомпозиции микросервисов](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-08-decomposition-of-microservices)**
-9. Распределенные транзакции
+9. **[Распределенные транзакции](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-09-saga)**
 10. Event Sourcing и CQRS

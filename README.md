@@ -1,7 +1,6 @@
 ## **[Microservice Architecture](https://otus.ru/lessons/microservice-architecture/)** 
 
 ![](https://img.shields.io/github/languages/top/never-sleeps/microservice-architecture)
-#### Irina Konyakina (iakonyakina@gmail.com)
 
 1. **[Архитектура и базовые сущности Кubernetes](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-01)** 
 2. **[Helm 3 и шаблонизация манифестов](https://github.com/never-sleeps/microservice-architecture/tree/master/homework-02)**
